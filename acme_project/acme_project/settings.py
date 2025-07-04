@@ -50,6 +50,8 @@ TEMPLATES = [
     },
 ]
 
+MEDIA_ROOT = BASE_DIR / 'media'
+
 WSGI_APPLICATION = 'acme_project.wsgi.application'
 
 DATABASES = {

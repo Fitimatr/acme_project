@@ -1,19 +1,21 @@
-<!-- templates/birthday/birthday_list.html -->
+<!-- birthday/birthday_form.html -->
 {% extends 'base.html' %}
+{% load django_bootstrap5 %}
 
 {% block content %}
-  {% for birthday in birthdays %}
-    <div>
-      <div>{{ birthday.first_name }} {{ birthday.last_name }} - {{ birthday.birthday }}</div>
-      <!--  Ссылку тоже обернём в div; адрес ссылки
-        указываем через namespace:name  -->
-      <div>
-        <a href="{% url 'birthday:edit' birthday.id %}">Изменить запись</a>
-        <a href="{% url 'birthday:delete' birthday.id %}">Удалить запись</a>
-      </div>
-      {% if not forloop.last %}
-        <hr />
-      {% endif %}
+  {% if '/edit/' in request.path %}
+    <h1>Редактировать запись {{ form.instance.pk }}</h1>
+  {% else %}
+    <h1>Создать запись</h1>
+  {% endif %}
+  <div class="card col-4">
+    <div class="card-header">Калькулятор ожидания дня рождения</div>
+    <div class="card-body">
+      <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {% bootstrap_form form %}
+        {% bootstrap_button button_type='submit' content='Отправить' %}
+      </form>
     </div>
-  {% endfor %}
+  </div>
 {% endblock %}
